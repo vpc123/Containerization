@@ -1,14 +1,14 @@
 # service mesh 开源实现 istio安装测试
 
-
-
 ### 简介
 
 `istio`是一个`service mesh`开源实现，由Google/IBM/Lyft共同开发。与之类似的还有`conduit`，但是功能不如`istio`丰富稳定。架构图如下：
 
+![5c650f911fcaa](https://i.loli.net/2019/02/14/5c650f911fcaa.png)
+
+![5c650f735125f](https://i.loli.net/2019/02/14/5c650f735125f.png)
 
 
-![image\1](image\1.png)
 
 `\# 去下面的地址下载压缩包`
 
@@ -158,11 +158,7 @@
 
 `kubectl get pods -n istio-system`
 
-
-
 ### 启用自动注入 sidecar
-
-
 
 - 不开启自动注入部署应用需要使用如下方式的命令
 
@@ -284,7 +280,7 @@ istio/examples-bookinfo-productpage-v1
 
 该应用架构图如下：
 
-![image\2](image\2.png)
+![5c650fff92934](https://i.loli.net/2019/02/14/5c650fff92934.png)
 
 **部署应用**
 
@@ -298,7 +294,7 @@ kubectl create -f <(istioctl kube-inject -f samples/apps/bookinfo/bookinfo.yaml)
 
 如果将`productpage`配置在了ingress里了，那么在浏览器中访问`http://ingress.istio.io/productpage`，如果使用了istio默认的`gateway`ingress配置的话，ingress service使用`nodePort`方式暴露的默认使用32000端口，那么可以使用`http://任意节点的IP:32000/productpage`来访问。
 
-![image\3](image\3.jpg)
+![5c65101e3d504](https://i.loli.net/2019/02/14/5c65101e3d504.png)
 
 ![图片 \- BookInfo Sample页面]()
 
@@ -309,8 +305,6 @@ kubectl create -f <(istioctl kube-inject -f samples/apps/bookinfo/bookinfo.yaml)
 BookInfo示例中有三个版本的`reviews`，可以使用istio来配置路由请求，将流量分发到不同版本的应用上。参考[Configuring Request Routing](https://istio.io/docs/tasks/request-routing.html)。
 
 还有一些更高级的功能，我们后续将进一步探索。
-
-
 
 ### 监控部署
 
@@ -335,5 +329,3 @@ samples/bookinfo/kube/cleanup.sh
 kubectl delete -f install/kubernetes/istio.yaml
 # kubectl delete -f install/kubernetes/istio-auth.yaml
 ```
-
-
