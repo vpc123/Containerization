@@ -1,0 +1,16 @@
+apiVersion: projectcalico.org/v3
+kind: Node
+metadata:
+  creationTimestamp: 2019-01-14T08:54:27Z
+  labels:
+    groupa: node
+  name: node94
+  resourceVersion: "292020"
+  uid: ff797821-17d9-11e9-b465-005056bc494a
+spec:
+  bgp:
+    ipv4Address: 10.10.102.94/24
+    ipv4IPIPTunnelAddr: 172.16.72.64
+  orchRefs:
+  - nodeName: node94
+    orchestrator: k8s

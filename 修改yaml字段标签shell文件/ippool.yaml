@@ -1,0 +1,11 @@
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  creationTimestamp: null
+  name: ip30
+spec:
+  blockSize: ${nodeNetWork:0-3}
+  cidr: ${nodeNetWork}
+  ipipMode: Always
+  natOutgoing: true
+  nodeSelector: custom==$nodeName
