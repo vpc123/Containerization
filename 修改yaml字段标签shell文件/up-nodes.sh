@@ -6,8 +6,6 @@ var nodeName=$0;      			        #机器名
 var nodeNetWork=$1;    				   	#自定义网段
 var nodeSelectLable=nodeName;           #标签
 
- 
-
 #第一步：编辑nodeName.yaml
 calicoctl get nodeName  node  -oyaml  >> nodeName.yaml
 sed -i "/name: /i\  labels:" nodeName.yaml
@@ -17,8 +15,10 @@ calicoctl delete node  nodeName
 calicoctl create -f   nodeName.yaml
 
 #第二步：编辑ippool.yaml
+
 var1=`echo $nodeNetWork|awk -F '/' '{print $2}'`
-sed -i 's/blockSize:.* /blockSize: '"$var1"'/g' ippool.yaml
+var2="blockSize: "$var1
+sed -i "s/blockSize:.*/$var2/g" ippool.yaml
 sed -i "s#cidr:.*#cidr: $nodeNetWork#g" ippool.yaml
 sed -i 's/nodeSelector:.*/nodeSelector: custom=='"$nodeName"'/g' ippool.yaml
 calicoctl create -f ippool.yaml
@@ -32,7 +32,7 @@ if [ -z "$rep" ];then
 else
     echo "not empty!"
     # sed -i  "s#nodeSelector:.*#$ipNetWork#g" default-ipv4.yaml
-    sed -i 's/nodeSelector:.*/nodeSelector: custom==$nodeName/g' default-ipv4.yaml
+    sed -i 's/nodeSelector:.*/nodeSelector: kubernets.io/hostname!='"$nodeName"'/g' default-ipv4.yaml
     echo $rep
 fi
 
