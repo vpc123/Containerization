@@ -4,8 +4,8 @@ metadata:
   creationTimestamp: null
   name: ip30
 spec:
-  blockSize: ${nodeNetWork:0-3}
-  cidr: ${nodeNetWork}
+  blockSize: 25
+  cidr: 30.0.0.0/25
   ipipMode: Always
   natOutgoing: true
-  nodeSelector: custom==$nodeName
+  nodeSelector: kubernetes.io/hostname == 'node94' 

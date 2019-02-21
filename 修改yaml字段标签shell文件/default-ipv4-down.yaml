@@ -1,0 +1,13 @@
+apiVersion: projectcalico.org/v3
+kind: IPPool
+metadata:
+  creationTimestamp: 2019-01-14T08:54:27Z
+  name: default-ipv4-ippool
+  resourceVersion: "130240"
+  uid: ff87fe71-17d9-11e9-9a11-005056bc494c
+spec:
+  blockSize: 26
+  cidr: 172.16.0.0/16
+  ipipMode: CrossSubnet
+  natOutgoing: true
+  nodeSelector: all() && kubernetes.io/hostname!=eeee && kubernetes.io/hostname!=bbb && kubernetes.io/hostname!=liuliu
