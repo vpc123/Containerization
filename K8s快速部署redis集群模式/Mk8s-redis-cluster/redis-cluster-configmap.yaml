@@ -1,0 +1,14 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: redis-cluster-config
+  namespace: kube-system
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+data:
+    redis-cluster.conf: |
+      port 6379
+      cluster-enabled yes
+      requirepass 123456
+      masterauth 123456
+      cluster-config-file "nodes.conf"

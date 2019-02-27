@@ -1,0 +1,53 @@
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+  labels:
+    app: redis-cluster-ss
+  name: redis-cluster-ss
+  namespace: kube-system
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: redis-cluster-ss
+  serviceName: redis-cluster-ss
+  template:
+    metadata:
+      labels:
+        app: redis-cluster-ss
+    spec:
+      containers:
+      - args:
+        - -c
+        - cp /mnt/redis-cluster.conf /data ; cat /home/client.rb > /usr/lib/ruby/gems/2.4.0/gems/redis-4.0.3/lib/redis/client.rb ; redis-server /data/redis-cluster.conf
+        command:
+        - sh
+        image: 192.168.26.46/k8s-deploy/redis-trib:4.0.10
+        imagePullPolicy: IfNotPresent
+        name: redis-cluster
+        ports:
+        - containerPort: 6379
+          name: masterport
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /mnt/
+          name: config-volume
+          readOnly: false
+        - mountPath: /home/
+          name: client-volume
+          readOnly: false
+      serviceAccountName: redis-cluster
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          items:
+          - key: redis-cluster.conf
+            path: redis-cluster.conf
+          name: redis-cluster-config  
+        name: config-volume
+      - configMap:
+          items:
+          - key: client.rb
+            path: client.rb
+          name: redis-client
+        name: client-volume
